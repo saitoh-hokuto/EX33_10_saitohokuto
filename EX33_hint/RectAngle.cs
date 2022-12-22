@@ -1,6 +1,10 @@
-﻿using System;
+﻿using EX33_hint;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Text;
+using System.Threading.Tasks;
 
 namespace EX33_hint
 {
@@ -37,6 +41,24 @@ namespace EX33_hint
         public static bool operator !=(RectAngle rectAngle1, RectAngle rectAngle2)
         {
             return !(rectAngle1 == rectAngle2);
+        }
+
+        public static RectAngle operator +(RectAngle rectAngle1, RectAngle rectAngle2)
+        {
+            int select_calculating_method = 0;
+            RectAngle[] choice = new RectAngle[4];
+            choice[0] = new RectAngle(rectAngle1.height + rectAngle2.height, MathF.Max(rectAngle1.width, rectAngle2.width));
+            choice[1] = new RectAngle(rectAngle1.width + rectAngle2.width, MathF.Max(rectAngle1.height, rectAngle2.height));
+            choice[2] = new RectAngle(rectAngle1.height + rectAngle2.width, MathF.Max(rectAngle1.width, rectAngle2.height));
+            choice[3] = new RectAngle(rectAngle1.width + rectAngle2.height, MathF.Max(rectAngle1.height, rectAngle2.width));
+            for(int i =1;i< choice.Length; i++)
+            {
+                if (choice[i].width * choice[i].height < choice[select_calculating_method].width * choice[select_calculating_method].height)
+                {
+                    select_calculating_method = i;
+                }
+            }
+            return choice[select_calculating_method];
         }
     }
 }
